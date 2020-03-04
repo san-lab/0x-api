@@ -23,6 +23,7 @@ export const QUOTE_ORDER_EXPIRATION_BUFFER_MS = ONE_SECOND_MS * 90; // Ignore or
 export const GAS_LIMIT_BUFFER_PERCENTAGE = 0.2; // Add 20% to the estimated gas limit
 export const DEFAULT_QUOTE_SLIPPAGE_PERCENTAGE = 0.01; // 1% Slippage
 export const ETH_SYMBOL = 'ETH';
+export const WETH_SYMBOL = 'WETH';
 export const ADDRESS_HEX_LENGTH = 42;
 export const DEFAULT_TOKEN_DECIMALS = 18;
 export const FIRST_PAGE = 1;

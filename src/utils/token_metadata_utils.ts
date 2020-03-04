@@ -1,4 +1,4 @@
-import { ADDRESS_HEX_LENGTH, ETH_SYMBOL } from '../constants';
+import { ADDRESS_HEX_LENGTH, ETH_SYMBOL, WETH_SYMBOL } from '../constants';
 import { TokenMetadataAndChainAddresses, TokenMetadatasForChains } from '../token_metadatas_for_networks';
 import { ChainId, TokenMetadata } from '../types';
 
@@ -10,7 +10,7 @@ import { ChainId, TokenMetadata } from '../types';
  */
 export function getTokenMetadataIfExists(tokenAddressOrSymbol: string, chainId: ChainId): TokenMetadata | undefined {
     let entry: TokenMetadataAndChainAddresses | undefined;
-    if (tokenAddressOrSymbol.startsWith('0x') && tokenAddressOrSymbol.length === ADDRESS_HEX_LENGTH) {
+    if (tokenAddressOrSymbol.toLowerCase().startsWith('0x') && tokenAddressOrSymbol.length === ADDRESS_HEX_LENGTH) {
         entry = TokenMetadatasForChains.find(
             tm => tm.tokenAddresses[chainId].toLowerCase() === tokenAddressOrSymbol.toLowerCase(),
         );
@@ -34,7 +34,9 @@ export function getTokenMetadataIfExists(tokenAddressOrSymbol: string, chainId: 
  * @param tokenSymbol the symbol of the token
  */
 export function isETHSymbol(tokenSymbol: string): boolean {
-    return tokenSymbol.toLowerCase() === ETH_SYMBOL.toLowerCase();
+    const isETH = (sym: string) => sym.toLowerCase() === ETH_SYMBOL.toLowerCase();
+    const isWETH = (sym: string) => sym.toLowerCase() === WETH_SYMBOL.toLowerCase();
+    return isETH(tokenSymbol) || isWETH(tokenSymbol);
 }
 
 /**
@@ -44,8 +46,8 @@ export function isETHSymbol(tokenSymbol: string): boolean {
  * @param chainId the Network where the address should be hosted on.
  */
 export function findTokenAddress(symbolOrAddress: string, chainId: ChainId): string {
-    if (symbolOrAddress.startsWith('0x') && symbolOrAddress.length === ADDRESS_HEX_LENGTH) {
-        return symbolOrAddress;
+    if (symbolOrAddress.toLowerCase().startsWith('0x') && symbolOrAddress.length === ADDRESS_HEX_LENGTH) {
+        return symbolOrAddress.toLowerCase();
     }
     const entry = getTokenMetadataIfExists(symbolOrAddress, chainId);
     if (!entry) {

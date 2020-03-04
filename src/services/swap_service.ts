@@ -157,7 +157,9 @@ export class SwapService {
         // returns price in sellToken units, e.g What is the price of 1 ZRX (in DAI)
         // Equivalent to performing multiple swap quotes selling sellToken and buying 1 whole buy token
         const takerAssetData = assetDataUtils.encodeERC20AssetData(sellToken.tokenAddress);
-        const queryAssetData = TokenMetadatasForChains.filter(m => m.symbol !== sellToken.symbol);
+        const queryAssetData = TokenMetadatasForChains.filter(
+            m => m.symbol.toLowerCase() !== sellToken.symbol.toLowerCase(),
+        );
         const chunkSize = 20;
         const assetDataChunks = _.chunk(queryAssetData, chunkSize);
         const allResults = _.flatten(
