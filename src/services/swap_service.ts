@@ -70,13 +70,19 @@ export class SwapService {
             from,
             excludedSources,
             affiliateAddress,
+            apiKey,
+            intentOnFilling,
         } = params;
+        const rfqtProviders = JSON.parse(process.env.RFQT_TAKER_WHITELIST || '[]').includes(apiKey) ? JSON.parse(process.env.RFQT_MAKER_ENDPOINTS || '[]') : [];
         const assetSwapperOpts = {
             ...ASSET_SWAPPER_MARKET_ORDERS_OPTS,
             slippagePercentage,
             bridgeSlippage: slippagePercentage,
             gasPrice: providedGasPrice,
             excludedSources, // TODO(dave4506): overrides the excluded sources selected by chainId
+            apiKey,
+            rfqtProviders,
+            intentOnFilling,
         };
         if (sellAmount !== undefined) {
             swapQuote = await this._swapQuoter.getMarketSellSwapQuoteAsync(
