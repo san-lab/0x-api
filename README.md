@@ -1,5 +1,8 @@
 ## Introduction
 
+At the moment of creation of this repo, the development of 0xAPI has been doing in Master with no version control.
+This repo fix some dependencies versions.
+
 This is a fork of 0xAPI used for Blablapay use case.
 
 ## Deploying
